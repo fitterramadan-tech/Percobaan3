@@ -12,4 +12,36 @@ function registerUser(name, email, pass){
 // Validasi login
 function loginUser(email, pass){
   const users = JSON.parse(localStorage.getItem('simple_users') || '[]');
-  return users.find
+  return users.find(u => u.email===email && u.pass===btoa(pass));
+}
+
+// Handle form
+const regForm = document.getElementById('registerForm');
+if(regForm){
+  regForm.onsubmit = (e)=>{
+    e.preventDefault();
+    const name = document.getElementById('regName').value;
+    const email = document.getElementById('regEmail').value;
+    const pass = document.getElementById('regPassword').value;
+
+    if(registerUser(name,email,pass)){
+      alert('Akun berhasil dibuat!');
+      location.href = 'index.html';
+    } else alert('Email sudah terdaftar!');
+  }
+}
+
+const logForm = document.getElementById('loginForm');
+if(logForm){
+  logForm.onsubmit = (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const pass = document.getElementById('loginPassword').value;
+
+    const user = loginUser(email,pass);
+    if(!user) return alert('Email atau password salah');
+
+    localStorage.setItem('simple_session', JSON.stringify(user));
+    location.href = 'home.html';
+  }
+                         }
