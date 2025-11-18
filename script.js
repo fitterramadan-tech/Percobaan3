@@ -1,91 +1,99 @@
-// Status kondisi
-let kondisi = {
-    lelah: false,
-    sakit: false,
-    emosi: false
-};
+document.getElementById('healthForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-// Toggle tombol kondisi
-function toggleCond(kond) {
-    kondisi[kond] = !kondisi[kond];
+    // 1. Ambil Nilai dari Input Dasar
+    const name = document.getElementById('name').value;
+    const heightCm = parseFloat(document.getElementById('height').value);
+    const weightKg = parseFloat(document.getElementById('weight').value);
 
-    const btnId = {
-        lelah: "btnLelah",
-        sakit: "btnSakit",
-        emosi: "btnEmosi"
-    };
+    // 2. Hitung BMI
+    const heightM = heightCm / 100;
+    // Formula BMI: Berat Badan (kg) / (Tinggi Badan (m))^2
+    const bmi = weightKg / (heightM * heightM);
 
-    let btn = document.getElementById(btnId[kond]);
-    btn.classList.toggle("selected");
-
-    updateHealth(); // Update real-time
-}
-
-// Analisa Kesehatan
-function updateHealth() {
-    let tb = parseFloat(document.getElementById("tb").value);
-    let bb = parseFloat(document.getElementById("bb").value);
-    let umur = parseFloat(document.getElementById("umur").value);
-
-    if (!tb || !bb || !umur) {
-        document.getElementById("hasilBMI").innerText = "BMI: -";
-        document.getElementById("hasilSkor").innerText = "Skor Kesehatan: -";
-        document.getElementById("aiSaran").innerText = "AI Saran: -";
-        return;
+    // 3. Klasifikasi BMI
+    let statusBmi = '';
+    let statusClass = '';
+    if (bmi < 18.5) {
+        statusBmi = 'Tak Ideal (Kurang Berat Badan)';
+        statusClass = 'non-ideal';
+    } else if (bmi >= 18.5 && bmi < 25.0) {
+        statusBmi = 'Idealis';
+        statusClass = 'ideal';
+    } else if (bmi >= 25.0 && bmi < 30.0) {
+        statusBmi = 'Tak Ideal (Kelebihan Berat Badan)';
+        statusClass = 'non-ideal';
+    } else {
+        statusBmi = 'Obesitas';
+        statusClass = 'obese';
     }
 
-    // Hitung BMI
-    let meter = tb / 100;
-    let bmi = (bb / (meter * meter)).toFixed(1);
-    document.getElementById("hasilBMI").innerText = "BMI: " + bmi;
+    // 4. Hitung Skor Keseharian
+    let score = 0;
+    // Ambil semua checkbox dalam grup
+    const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            // Ambil nilai dari attribute value (misalnya: "-3", "+4")
+            score += parseInt(checkbox.value); 
+        }
+    });
 
-    // Nilai dasar BMI
-    let ideal = "";
-    if (bmi < 18.5) ideal = "Kurus";
-    else if (bmi <= 24.9) ideal = "Ideal";
-    else if (bmi <= 29.9) ideal = "Berlebih";
-    else ideal = "Obesitas";
+    // 5. Tentukan Judul dan Saran
+    let resultTitle = '';
+    let suggestions = [];
 
-    // Skor awal
-    let skor = 100;
+    if (statusClass === 'ideal') {
+        resultTitle = `Selamat, ${name}! Hebat! Kamu Ada di Jalur Ceria Terbaik! ✨`;
+        suggestions.push("Pertahankan konsistensi dalam pola makan dan olahraga.");
+        suggestions.push("Tingkatkan kualitas tidur dan manajemen stres.");
+        if (score < 5) suggestions.push(`Skor keseharianmu (${score}) masih bisa ditingkatkan! Perhatikan faktor kelelahan, mood, atau sakit.`);
 
-    if (ideal === "Kurus") skor -= 10;
-    if (ideal === "Berlebih") skor -= 15;
-    if (ideal === "Obesitas") skor -= 25;
+    } else if (statusBmi.includes('Kurang Berat Badan')) {
+        resultTitle = `Halo, ${name}! Semangat! Sedikit Lagi Mencapai Ideal! 💪`;
+        suggestions.push("Fokus pada peningkatan massa otot dan asupan kalori yang berkualitas.");
+        suggestions.push("Makan lebih sering dengan porsi kecil, utamakan protein dan lemak sehat.");
+        suggestions.push("Latihan beban ringan sangat dianjurkan.");
 
-    // Penalti kondisi
-    if (kondisi.lelah) skor -= 15;
-    if (kondisi.sakit) skor -= 20;
-    if (kondisi.emosi) skor -= 10;
+    } else if (statusBmi.includes('Kelebihan Berat Badan')) {
+        resultTitle = `Halo, ${name}! Semangat! Sedikit Lagi Mencapai Ideal! 🏃`;
+        suggestions.push("Fokus pada defisit kalori ringan dan bertahap. Hindari diet ekstrem.");
+        suggestions.push("Tingkatkan olahraga kardio (jalan kaki, jogging) dan tambahkan latihan beban.");
+        suggestions.push("Kurangi asupan gula dan minuman manis.");
 
-    // Penalti umur
-    if (umur < 12) skor -= 5;
-    else if (umur > 40) skor -= 10;
+    } else if (statusClass === 'obese') {
+        resultTitle = `Perhatian, ${name}! Waktunya Ambil Langkah Serius! 🛑`;
+        suggestions.push("Prioritas Utama: Penurunan berat badan harus menjadi fokus kesehatan Anda.");
+        suggestions.push("Sangat disarankan untuk berkonsultasi dengan ahli gizi dan/atau dokter.");
+        suggestions.push("Mulai dari hal kecil: jalan kaki 30 menit sehari dan mengurangi porsi makan perlahan.");
+    }
+    
+    // Tambahkan saran umum terkait skor keseharian jika nilainya rendah
+    if (score <= 0 && statusClass !== 'obese') {
+        suggestions.push("🔴 Peringatan Skor Rendah: Keluhan lelah/sakit/mood menunjukkan kualitas keseharian perlu diperbaiki. Cek lagi pola tidur dan hidrasi Anda!");
+    }
 
-    if (skor < 0) skor = 0;
+    // 6. Tampilkan Hasil
+    const resultDiv = document.getElementById('result');
+    
+    let suggestionHtml = suggestions.map(s => `<li>${s}</li>`).join('');
 
-    document.getElementById("hasilSkor").innerText = "Skor Kesehatan: " + skor + "/100";
-
-    // Saran AI
-    let saran = "Kondisi cukup stabil.";
-
-    if (skor >= 85) saran = "Kondisi kamu ideal! Tetap jaga pola makan dan aktivitas.";
-    else if (skor >= 65) saran = "Cukup baik. Olahraga ringan 2–3x seminggu disarankan.";
-    else if (skor >= 40) saran = "Perhatikan pola tidur, nutrisi, dan aktivitas fisik.";
-    else if (skor < 40) saran = "Kondisi kurang ideal. Konsultasi kesehatan dan istirahat cukup.";
-
-    // Saran khusus kondisi
-    if (kondisi.lelah) saran += " • Cepat lelah, perbaiki pola tidur dan gizi.";
-    if (kondisi.sakit) saran += " • Mudah sakit, tingkatkan imun dan olahraga ringan.";
-    if (kondisi.emosi) saran += " • Mudah berubah ekspresi, lakukan relaksasi.";
-
-    document.getElementById("aiSaran").innerText = saran;
-}
-
-// Update otomatis real-time saat input berubah
-document.getElementById("tb").addEventListener("input", updateHealth);
-document.getElementById("bb").addEventListener("input", updateHealth);
-document.getElementById("umur").addEventListener("input", updateHealth);
- 
-
-      
+    resultDiv.innerHTML = `
+        <h2 class="${statusClass}">${resultTitle}</h2>
+        <div class="result-data ${statusClass}">
+            <p><strong>Nilai BMI Anda:</strong> ${bmi.toFixed(2)} (${statusBmi})</p>
+            <p><strong>Skor Keseharian Anda:</strong> <span class="result-status ${statusClass}">${score}</span> Poin</p>
+        </div>
+        
+        <h3>✅ Saran Spesifik Untukmu:</h3>
+        <ul class="suggestion-list">
+            ${suggestionHtml}
+        </ul>
+    `;
+    
+    // Tampilkan div hasil
+    resultDiv.classList.remove('hidden');
+    
+    // Gulir ke hasil
+    resultDiv.scrollIntoView({ behavior: 'smooth' });
+});
