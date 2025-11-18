@@ -1,85 +1,120 @@
-/* Reset basic */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
 body {
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: #FFD700; /* Kuning Ceria */
+    color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Mulai dari atas */
+    padding: 20px;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
     padding: 20px;
 }
 
-.dash {
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 15px;
-    width: 400px;
-    max-width: 90%;
-}
-
-h2 {
+header {
     text-align: center;
     margin-bottom: 20px;
-    color: #333;
+}
+
+header h1 {
+    color: #4CAF50; /* Hijau Segar */
+    font-size: 2.5em;
+    margin-bottom: 5px;
 }
 
 .card {
-    background: rgba(255,255,255,0.25);
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    color: #1e88e5; /* Biru Energi */
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group, .checkbox-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"] {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+.checkbox-group label {
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.submit-btn {
+    width: 100%;
     padding: 15px;
-    border-radius: 10px;
+    background-color: #4CAF50; /* Hijau Ceria */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
     margin-top: 15px;
 }
 
-.card h3 {
+.submit-btn:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
+/* Styling untuk Hasil */
+.hidden {
+    display: none;
+}
+
+.result-ideal { border-left: 5px solid #4CAF50; }
+.result-non-ideal { border-left: 5px solid #FF9800; }
+.result-obese { border-left: 5px solid #F44336; }
+
+.result-status {
+    font-size: 1.5em;
+    font-weight: bold;
     margin-bottom: 10px;
-    color: #222;
 }
 
-input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: none;
+.result-status.ideal { color: #4CAF50; }
+.result-status.non-ideal { color: #FF9800; }
+.result-status.obese { color: #F44336; }
+
+.result-data p {
+    margin: 5px 0;
 }
 
-button {
-    padding: 10px 12px;
-    margin: 5px;
-    border: none;
-    border-radius: 6px;
-    background-color: #3498db;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
+.suggestion-list {
+    margin-top: 15px;
+    padding-left: 20px;
 }
-
-button:hover {
-    background-color: #2980b9;
-}
-
-button.selected {
-    background-color: #f39c12 !important;
-}
-
-/* Responsive Mobile */
-@media (max-width: 480px) {
-    .dash {
-        width: 100%;
-        padding: 20px;
-    }
-
-    button {
-        width: 100%;
-        margin: 5px 0;
-    }
-}
-
-  
