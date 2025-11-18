@@ -1,120 +1,73 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #FFD700; /* Kuning Ceria */
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Mulai dari atas */
-    padding: 20px;
-    min-height: 100vh;
     margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f6f8fa;
 }
 
-.container {
-    width: 100%;
-    max-width: 600px;
-    padding: 20px;
-}
-
+/* HEADER */
 header {
+    background: linear-gradient(135deg, #4CAF50, #2E8B57);
+    color: white;
     text-align: center;
-    margin-bottom: 20px;
+    padding: 60px 20px;
 }
 
 header h1 {
-    color: #4CAF50; /* Hijau Segar */
-    font-size: 2.5em;
-    margin-bottom: 5px;
+    margin: 0;
+    font-size: 42px;
 }
 
+header p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.judul-section {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* GRID INFOGRAFIS */
+.infografis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
 .card {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-.card h2 {
-    color: #1e88e5; /* Biru Energi */
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.input-group, .checkbox-group {
+.card img {
+    width: 100px;
     margin-bottom: 15px;
 }
 
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+.card h3 {
+    margin-top: 0;
+    color: #2E8B57;
 }
 
-.input-group input[type="text"],
-.input-group input[type="number"] {
-    width: 95%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    transition: border-color 0.3s;
+.card p {
+    color: #555;
 }
 
-.input-group input:focus {
-    border-color: #4CAF50;
-    outline: none;
-}
-
-.checkbox-group label {
-    display: block;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.submit-btn {
-    width: 100%;
-    padding: 15px;
-    background-color: #4CAF50; /* Hijau Ceria */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    margin-top: 15px;
-}
-
-.submit-btn:hover {
-    background-color: #45a049;
-    transform: translateY(-1px);
-}
-
-/* Styling untuk Hasil */
-.hidden {
-    display: none;
-}
-
-.result-ideal { border-left: 5px solid #4CAF50; }
-.result-non-ideal { border-left: 5px solid #FF9800; }
-.result-obese { border-left: 5px solid #F44336; }
-
-.result-status {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.result-status.ideal { color: #4CAF50; }
-.result-status.non-ideal { color: #FF9800; }
-.result-status.obese { color: #F44336; }
-
-.result-data p {
-    margin: 5px 0;
-}
-
-.suggestion-list {
-    margin-top: 15px;
-    padding-left: 20px;
-}
+/* FOOTER */
+footer {
+    text-align: center;
+    margin: 50px 0 20px;
+    color: #777;
+    }
