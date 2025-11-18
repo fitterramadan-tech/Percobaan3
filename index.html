@@ -2,37 +2,64 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sehat Ceria: Skor Keseharianmu!</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>☀️ Halo, Pejuang Sehat!</h1>
+            <p>Kesehatan adalah kebahagiaan. Isi formulir ini dan temukan versi terbaik dirimu!</p>
+        </header>
 
-<div class="box" id="loginBox">
-    <h2>Login</h2>
-    <input type="text" id="loginUser" placeholder="Username">
-    <input type="password" id="loginPass" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div class="link" onclick="showRegister()">Belum punya akun?</div>
-    <div class="link" onclick="showChangePass()">Ganti Password</div>
-</div>
+        <div class="card">
+            <h2>📝 Data Dasar</h2>
+            <form id="healthForm">
+                <div class="input-group">
+                    <label for="name">Nama Panggilan:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="age">Umur (Tahun):</label>
+                    <input type="number" id="age" required min="1" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="height">Tinggi Badan (cm):</label>
+                    <input type="number" id="height" required min="50" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label for="weight">Berat Badan (kg):</label>
+                    <input type="number" id="weight" required min="10" step="0.1">
+                </div>
 
-<div class="box" id="registerBox">
-    <h2>Register</h2>
-    <input type="text" id="regUser" placeholder="Username">
-    <input type="password" id="regPass" placeholder="Password">
-    <button onclick="register()">Daftar</button>
-    <div class="link" onclick="showLogin()">Sudah punya akun?</div>
-</div>
+                <h2>🧘 Cek Keseharian Tambahan</h2>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" id="fatigue" value="-3"> Cepat Lelah (Sering merasa lelah)
+                    </label>
+                    <label>
+                        <input type="checkbox" id="moody" value="-2"> Gampang Berubah Mood-nya (Mood sering naik-turun)
+                    </label>
+                    <label>
+                        <input type="checkbox" id="sick" value="-5"> Gampang Sakit (Sering terserang flu/demam)
+                    </label>
+                    <label>
+                        <input type="checkbox" id="sleep" value="+4"> Tidur Cukup (7-9 jam per hari)
+                    </label>
+                    <label>
+                        <input type="checkbox" id="water" value="+2"> Minum Air Cukup (≥ 8 gelas per hari)
+                    </label>
+                </div>
 
-<div class="box" id="changeBox">
-    <h2>Ganti Password</h2>
-    <input type="text" id="chgUser" placeholder="Username">
-    <input type="password" id="chgOld" placeholder="Password Lama">
-    <input type="password" id="chgNew" placeholder="Password Baru">
-    <button onclick="changePassword()">Ganti</button>
-    <div class="link" onclick="showLogin()">Kembali ke Login</div>
-</div>
+                <button type="submit" class="submit-btn">Hitung Skor Ceriaku! ✨</button>
+            </form>
+        </div>
 
-<script src="script.js"></script>
+        <div id="result" class="card hidden">
+            </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
