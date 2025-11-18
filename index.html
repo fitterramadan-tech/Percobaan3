@@ -3,63 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sehat Ceria: Skor Keseharianmu!</title>
+    <title>Cek Kesehatan</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <header>
+        <h1>Cek Kesehatan</h1>
+        <p>Informasi kesehatan yang sederhana, cepat, dan mudah dipahami.</p>
+    </header>
+
     <div class="container">
-        <header>
-            <h1>☀️ Halo, Pejuang Sehat!</h1>
-            <p>Kesehatan adalah kebahagiaan. Isi formulir ini dan temukan versi terbaik dirimu!</p>
-        </header>
+        <h2 class="judul-section">Infografis Kesehatan</h2>
 
-        <div class="card">
-            <h2>📝 Data Dasar</h2>
-            <form id="healthForm">
-                <div class="input-group">
-                    <label for="name">Nama Panggilan:</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="input-group">
-                    <label for="age">Umur (Tahun):</label>
-                    <input type="number" id="age" required min="1" step="1">
-                </div>
-                <div class="input-group">
-                    <label for="height">Tinggi Badan (cm):</label>
-                    <input type="number" id="height" required min="50" step="0.1">
-                </div>
-                <div class="input-group">
-                    <label for="weight">Berat Badan (kg):</label>
-                    <input type="number" id="weight" required min="10" step="0.1">
-                </div>
+        <div class="infografis">
 
-                <h2>🧘 Cek Keseharian Tambahan</h2>
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" id="fatigue" value="-3"> Cepat Lelah (Sering merasa lelah)
-                    </label>
-                    <label>
-                        <input type="checkbox" id="moody" value="-2"> Gampang Berubah Mood-nya (Mood sering naik-turun)
-                    </label>
-                    <label>
-                        <input type="checkbox" id="sick" value="-5"> Gampang Sakit (Sering terserang flu/demam)
-                    </label>
-                    <label>
-                        <input type="checkbox" id="sleep" value="+4"> Tidur Cukup (7-9 jam per hari)
-                    </label>
-                    <label>
-                        <input type="checkbox" id="water" value="+2"> Minum Air Cukup (≥ 8 gelas per hari)
-                    </label>
-                </div>
-
-                <button type="button" class="submit-btn" onclick="calculateScore()">Hitung Skor Ceriaku! ✨</button>
-            </form>
-        </div>
-
-        <div id="result" class="card hidden">
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966486.png" alt="Detak Jantung">
+                <h3>Cek Detak Jantung</h3>
+                <p>Detak jantung normal: 60–100 bpm untuk orang dewasa.</p>
             </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Berat Badan">
+                <h3>Indeks Massa Tubuh</h3>
+                <p>IMT normal berada pada rentang 18.5 – 24.9.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" alt="Air Minum">
+                <h3>Kebutuhan Cairan</h3>
+                <p>Orang dewasa membutuhkan sekitar 2 liter air per hari.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966501.png" alt="Tekanan Darah">
+                <h3>Tekanan Darah Normal</h3>
+                <p>Tekanan darah normal adalah 120/80 mmHg.</p>
+            </div>
+
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <footer>
+        © 2025 Cek Kesehatan
+    </footer>
+
 </body>
 </html>
