@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box" id="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="loginUser" placeholder="Username">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div class="link" onclick="showRegister()">Belum punya akun?</div>
+    <div class="link" onclick="showChangePass()">Ganti Password</div>
+</div>
+
+<div class="box" id="registerBox">
+    <h2>Register</h2>
+    <input type="text" id="regUser" placeholder="Username">
+    <input type="password" id="regPass" placeholder="Password">
+    <button onclick="register()">Daftar</button>
+    <div class="link" onclick="showLogin()">Sudah punya akun?</div>
+</div>
+
+<div class="box" id="changeBox">
+    <h2>Ganti Password</h2>
+    <input type="text" id="chgUser" placeholder="Username">
+    <input type="password" id="chgOld" placeholder="Password Lama">
+    <input type="password" id="chgNew" placeholder="Password Baru">
+    <button onclick="changePassword()">Ganti</button>
+    <div class="link" onclick="showLogin()">Kembali ke Login</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
