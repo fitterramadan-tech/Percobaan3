@@ -2,110 +2,23 @@
 <html lang="id">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Web Cek Kehidupan - Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- Mode toggle kiri atas -->
-  <button id="themeToggle" class="theme-toggle" aria-label="Toggle mode">🌙</button>
-
-  <!-- App container -->
-  <div id="app">
-    <!-- Halaman: auth -->
-    <section id="authPage" class="page">
-      <div class="card auth-card">
-        <h1>Web Cek Kehidupan</h1>
-        <div id="authForms">
-          <form id="loginForm" class="form">
-            <h2>Login</h2>
-            <input id="loginEmail" placeholder="Email" required>
-            <input id="loginPassword" type="password" placeholder="Password" required>
-            <button type="submit">Masuk</button>
-            <p>Belum punya akun? <a href="#" id="showRegister">Daftar</a></p>
-          </form>
-
-          <form id="registerForm" class="form hidden">
-            <h2>Daftar</h2>
-            <input id="regName" placeholder="Nama" required>
-            <input id="regEmail" placeholder="Email" required>
-            <input id="regAge" type="number" placeholder="Umur" required>
-            <input id="regPassword" type="password" placeholder="Password" required>
-            <button type="submit">Daftar</button>
-            <p>Sudah punya akun? <a href="#" id="showLogin">Masuk</a></p>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Halaman: setelah login -->
-    <section id="mainPage" class="page hidden">
-      <header class="topbar">
-        <h2 id="welcomeText">Halo, User</h2>
-        <button id="menuBtn" class="menu-btn" aria-label="Menu">☰</button>
-      </header>
-
-      <main class="main">
-        <div class="card">
-          <h3>Tentang Web Ini</h3>
-          <p>Fungsi: Chat sederhana & cek kehidupan sehari-hari.
-          Gunakan fitur cek kesehatan untuk mengetahui kondisi tubuh ideal dan dapatkan saran AI sederhana.</p>
-        </div>
-
-        <div class="card">
-          <h3>Cek Kesehatan</h3>
-          <form id="healthForm" class="form-compact">
-            <input id="height" type="number" placeholder="Tinggi (cm)" required>
-            <input id="weight" type="number" placeholder="Berat (kg)" required>
-            <input id="age" type="number" placeholder="Umur" required>
-
-            <div class="checkboxes">
-              <label><input type="checkbox" name="sym" value="lelahan"> Mudah lelah</label>
-              <label><input type="checkbox" name="sym" value="marah"> Mudah marah/ganti ekspresi</label>
-              <label><input type="checkbox" name="sym" value="sakit"> Mudah sakit</label>
-            </div>
-
-            <button type="submit">Cek</button>
-          </form>
-
-          <div id="healthResult" class="result hidden"></div>
-        </div>
-
-        <div class="card">
-          <h3>Chat Sederhana</h3>
-          <div id="chatBox" class="chat-box">
-            <div id="chatHistory"></div>
-            <div class="chat-input">
-              <input id="chatInput" placeholder="Tanyakan sesuatu tentang kehidupan...">
-              <button id="chatSend">Kirim</button>
-            </div>
-          </div>
-        </div>
-
-      </main>
-
-      <!-- Sidebar slide menu -->
-      <aside id="sidebar" class="sidebar hidden">
-        <div class="sidebar-header">
-          <h4>Menu</h4>
-          <button id="closeSidebar">✕</button>
-        </div>
-        <nav>
-          <ul>
-            <li><button id="navHealthHistory">History Kesehatan</button></li>
-            <li><button id="navProfile">Profil</button></li>
-            <li><button id="navLogout">Logout</button></li>
-          </ul>
-        </nav>
-
-        <div id="historyList" class="history-list"></div>
-      </aside>
-
-    </section>
+  <div class="container">
+    <div class="card">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input id="loginEmail" type="email" placeholder="Email" required>
+        <input id="loginPassword" type="password" placeholder="Password" required>
+        <button type="submit">Masuk</button>
+      </form>
+      <p>Belum punya akun? <a href="register.html">Daftar</a></p>
+    </div>
   </div>
 
-  <script src="js/db.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/app.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>
