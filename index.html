@@ -1,89 +1,303 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Kesehatan</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HealthBuddy — Cek Kesehatan & Rekomendasi Aktivitas</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- AUTH VIEWS -->
+  <main id="app">
+    <!-- Welcome / Auth container -->
+    <section id="auth-screen" class="view centered">
+      <div class="card auth-card">
+        <h1 class="brand">HealthBuddy</h1>
+        <p class="muted">Aplikasi cek kesehatan sederhana — offline dan aman di perangkat Anda.</p>
 
-<!-- NAV / HAMBURGER -->
-<div class="navbar">
-    <div class="logo">HealthCheck</div>
-    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-</div>
+        <div class="tabs">
+          <button id="tab-login" class="tab active">Login</button>
+          <button id="tab-register" class="tab">Register</button>
+        </div>
 
-<div id="sidebar" class="sidebar">
-    <a href="#" onclick="showPage('home')">Home</a>
-    <a href="#" onclick="showPage('bmi')">Cek Tubuh Ideal</a>
-    <a href="#" onclick="showPage('activity')">Rekomendasi Aktivitas</a>
-    <a href="#" onclick="logout()">Logout</a>
-</div>
+        <form id="form-login" class="form">
+          <label>Username
+            <input id="login-username" type="text" autocomplete="username" required />
+          </label>
+          <label>Password
+            <input id="login-password" type="password" autocomplete="current-password" required />
+          </label>
+          <div class="form-row">
+            <button id="btn-login" class="btn primary">Masuk</button>
+            <button id="btn-show-register" type="button" class="btn ghost">Buat akun</button>
+          </div>
+          <div id="login-error" class="error"></div>
+        </form>
 
-<!-- REGISTER PAGE -->
-<div id="register" class="page active">
-    <h2>Daftar Akun</h2>
-    <input type="text" id="regUser" placeholder="Username">
-    <input type="password" id="regPass" placeholder="Password">
-    <button onclick="register()">Daftar</button>
-    <p>Sudah punya akun? <a href="#" onclick="switchLogin()">Login</a></p>
-    <div id="regMsg" class="msg"></div>
-</div>
+        <form id="form-register" class="form hidden">
+          <label>Username
+            <input id="reg-username" type="text" required />
+          </label>
+          <label>Password
+            <input id="reg-password" type="password" required />
+          </label>
+          <label>Konfirmasi Password
+            <input id="reg-password2" type="password" required />
+          </label>
+          <div class="form-row">
+            <button id="btn-register" class="btn primary">Daftar</button>
+            <button id="btn-show-login" type="button" class="btn ghost">Ke login</button>
+          </div>
+          <div id="register-error" class="error"></div>
+        </form>
 
-<!-- LOGIN PAGE -->
-<div id="login" class="page">
-    <h2>Login</h2>
-    <input type="text" id="logUser" placeholder="Username">
-    <input type="password" id="logPass" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <p>Belum punya akun? <a href="#" onclick="switchRegister()">Daftar</a></p>
-    <div id="logMsg" class="msg"></div>
-</div>
+        <p class="muted small">Catatan: data disimpan di perangkat (LocalStorage). Gunakan akun untuk masuk pada perangkat yang sama.</p>
+      </div>
+    </section>
 
-<!-- HOME PAGE -->
-<div id="home" class="page">
-    <h2>Selamat Datang!</h2>
-    <p>Pilih fitur melalui menu.</p>
-</div>
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="view hidden">
+      <header class="topbar">
+        <button id="hamburger" class="hamburger" aria-label="menu">
+          <span></span><span></span><span></span>
+        </button>
+        <h2 id="page-title">Beranda</h2>
+        <div class="top-actions">
+          <span id="greeting" class="greeting">Halo</span>
+        </div>
+      </header>
 
-<!-- BMI PAGE -->
-<div id="bmi" class="page">
-    <h2>Cek Tubuh Ideal</h2>
-    <input type="number" id="age" placeholder="Umur">
-    <select id="gender">
-        <option value="pria">Pria</option>
-        <option value="wanita">Wanita</option>
-    </select>
-    <input type="number" id="height" placeholder="Tinggi (cm)">
-    <input type="number" id="weight" placeholder="Berat (kg)">
-    <button onclick="calcBMI()">Hitung BMI</button>
-    <div id="bmiResult" class="result"></div>
-</div>
+      <div class="layout">
+        <aside id="sidebar" class="sidebar hidden-sm">
+          <div class="profile-card">
+            <div class="avatar" id="avatar-svg" title="klik untuk bertanya">
+              <!-- Inline SVG kartun (imut & ceria) -->
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img">
+                <defs>
+                  <linearGradient id="g1" x1="0" x2="1">
+                    <stop offset="0" stop-color="#ffdede"/>
+                    <stop offset="1" stop-color="#ffe8b5"/>
+                  </linearGradient>
+                </defs>
+                <rect width="200" height="200" rx="20" fill="#f6fbff"/>
+                <g transform="translate(20,20) scale(0.9)">
+                  <ellipse cx="80" cy="110" rx="60" ry="35" fill="url(#g1)"/>
+                  <circle cx="80" cy="60" r="45" fill="#fff"/>
+                  <circle cx="60" cy="55" r="6" fill="#2b2b2b"/>
+                  <circle cx="100" cy="55" r="6" fill="#2b2b2b"/>
+                  <path d="M60 75 q20 20 40 0" stroke="#f39" stroke-width="3" fill="none" stroke-linecap="round"/>
+                  <circle cx="45" cy="40" r="8" fill="#ffd1f0" opacity="0.8"/>
+                  <circle cx="115" cy="35" r="6" fill="#cfefff" opacity="0.9"/>
+                  <path d="M10 150 q60 -40 140 0" fill="#ffdede" opacity="0.7"/>
+                </g>
+              </svg>
+            </div>
+            <div class="profile-info">
+              <div id="side-username" class="username">User</div>
+              <div class="muted small">HealthBuddy</div>
+            </div>
+          </div>
 
-<!-- ACTIVITY PAGE -->
-<div id="activity" class="page">
-    <h2>Rekomendasi Aktivitas</h2>
-    <label>Cuaca:</label>
-    <select id="weather">
-        <option value="cerah">Cerah</option>
-        <option value="mendung">Mendung</option>
-        <option value="hujan">Hujan</option>
-        <option value="panas">Panas</option>
-        <option value="badai">Badai</option>
-    </select>
+          <nav class="nav">
+            <button class="nav-item active" data-view="home">Beranda</button>
+            <button class="nav-item" data-view="bmi">Cek Tubuh Ideal (BMI)</button>
+            <button class="nav-item" data-view="activity">Rekomendasi Aktivitas</button>
+            <button class="nav-item" data-view="profile">Profil / Logout</button>
+          </nav>
+        </aside>
 
-    <label>Musim:</label>
-    <select id="season">
-        <option value="kemarau">Kemarau</option>
-        <option value="hujan">Hujan</option>
-    </select>
+        <section class="main">
+          <!-- Home -->
+          <article id="view-home" class="page active">
+            <div class="home-grid">
+              <div class="card home-hero">
+                <div class="hero-inner">
+                  <div class="hero-left">
+                    <h3>Halo! Aku HealthBuddy 👋</h3>
+                    <p>Website ini membantu kamu cek BMI, memberi rekomendasi aktivitas sesuai cuaca & musim, serta tips singkat pola makan.</p>
+                    <p class="muted">Klik gambar kartun di samping untuk mengobrol dengan HealthBuddy!</p>
+                  </div>
+                  <div class="hero-right">
+                    <!-- larger SVG same style, clickable -->
+                    <div id="hero-avatar" class="hero-avatar" title="Klik untuk menyapa">
+                      <!-- reuse a slightly larger SVG -->
+                      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img">
+                        <rect width="220" height="220" rx="26" fill="#f0fbff"/>
+                        <g transform="translate(30,20) scale(1.1)">
+                          <ellipse cx="80" cy="120" rx="60" ry="35" fill="url(#g1)" opacity="0.9"/>
+                          <circle cx="80" cy="60" r="45" fill="#fff"/>
+                          <circle cx="60" cy="55" r="6" fill="#2b2b2b"/>
+                          <circle cx="100" cy="55" r="6" fill="#2b2b2b"/>
+                          <path d="M60 75 q20 20 40 0" stroke="#f39" stroke-width="3" fill="none" stroke-linecap="round"/>
+                          <circle cx="45" cy="40" r="8" fill="#ffd1f0" opacity="0.8"/>
+                          <circle cx="115" cy="35" r="6" fill="#cfefff" opacity="0.9"/>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-    <button onclick="recommend()">Dapatkan Rekomendasi</button>
+              <!-- Speech bubble / chat pop -->
+              <div id="chat-bubble" class="chat-bubble hidden">
+                <div class="bubble-header">
+                  <strong>HealthBuddy</strong>
+                  <button id="bubble-close" class="btn tiny">x</button>
+                </div>
+                <div id="bubble-content" class="bubble-content">
+                  <p>Hai! Mau coba cek kesehatanmu sekarang? Klik menu "Cek Tubuh Ideal" atau "Rekomendasi Aktivitas". 😊</p>
+                </div>
+                <div class="bubble-actions">
+                  <button id="bubble-bmi" class="btn">Cek BMI</button>
+                  <button id="bubble-activity" class="btn ghost">Rekomendasi</button>
+                </div>
+              </div>
 
-    <div id="recResult" class="result"></div>
-</div>
+              <div class="card info-cards">
+                <h4>Cara pakai singkat</h4>
+                <ul>
+                  <li>Daftar dan masuk (data tersimpan di perangkat).</li>
+                  <li>Pakai menu untuk cek BMI atau dapatkan rekomendasi aktivitas sesuai cuaca & musim.</li>
+                  <li>Semua bekerja offline — aman dan cepat.</li>
+                </ul>
+              </div>
+            </div>
+          </article>
 
-<script src="script.js"></script>
+          <!-- BMI Page -->
+          <article id="view-bmi" class="page">
+            <div class="card">
+              <h3>Cek Tubuh Ideal (BMI)</h3>
+              <form id="bmi-form" class="form-grid">
+                <label>Umur
+                  <input id="bmi-age" type="number" min="5" max="120" required />
+                </label>
+                <label>Jenis Kelamin
+                  <select id="bmi-gender" required>
+                    <option value="">Pilih</option>
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                    <option value="other">Lainnya</option>
+                  </select>
+                </label>
+                <label>Tinggi (cm)
+                  <input id="bmi-height" type="number" min="50" max="250" step="0.1" required />
+                </label>
+                <label>Berat (kg)
+                  <input id="bmi-weight" type="number" min="10" max="400" step="0.1" required />
+                </label>
+
+                <fieldset class="symptoms">
+                  <legend>Gejala / keadaan (pilih jika cocok)</legend>
+                  <label><input type="checkbox" value="lelah" class="symp"> Cepat lelah</label>
+                  <label><input type="checkbox" value="mood" class="symp"> Cepat berubah mood</label>
+                  <label><input type="checkbox" value="fokus" class="symp"> Sulit fokus</label>
+                  <label><input type="checkbox" value="pusing" class="symp"> Pusing sering</label>
+                  <label><input type="checkbox" value="nafsu" class="symp"> Nafsu makan tidak stabil</label>
+                </fieldset>
+
+                <div class="form-row full">
+                  <button id="btn-calc-bmi" class="btn primary">Hitung BMI</button>
+                  <button id="btn-clear-bmi" type="button" class="btn ghost">Reset</button>
+                </div>
+              </form>
+
+              <div id="bmi-result" class="result hidden">
+                <div class="result-grid">
+                  <div class="card result-card">
+                    <h4>Nilai BMI</h4>
+                    <div id="bmi-value" class="big">—</div>
+                    <div id="bmi-status" class="muted">—</div>
+                  </div>
+
+                  <div class="card result-card">
+                    <h4>Berat Ideal</h4>
+                    <div id="ideal-broca">—</div>
+                    <div id="ideal-devine" class="muted small">—</div>
+                  </div>
+
+                  <div class="card result-card">
+                    <h4>Saran Singkat</h4>
+                    <div id="bmi-advice">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Activity Page -->
+          <article id="view-activity" class="page">
+            <div class="card">
+              <h3>Rekomendasi Aktivitas Berdasarkan Cuaca & Musim</h3>
+              <form id="activity-form" class="form-grid">
+                <label>Cuaca
+                  <select id="act-weather" required>
+                    <option value="">Pilih cuaca</option>
+                    <option value="cerah">Cerah</option>
+                    <option value="mendung">Mendung</option>
+                    <option value="hujan">Hujan</option>
+                    <option value="panas">Panas</option>
+                    <option value="badai">Badai</option>
+                  </select>
+                </label>
+
+                <label>Musim
+                  <select id="act-season" required>
+                    <option value="">Pilih musim</option>
+                    <option value="kemarau">Kemarau</option>
+                    <option value="hujan_season">Musim Hujan</option>
+                    <option value="semi">Semi</option>
+                    <option value="gugur">Gugur</option>
+                    <option value="dingin">Dingin</option>
+                  </select>
+                </label>
+
+                <label>Waktu
+                  <select id="act-time" required>
+                    <option value="">Pilih waktu</option>
+                    <option value="pagi">Pagi</option>
+                    <option value="siang">Siang</option>
+                    <option value="malam">Malam</option>
+                    <option value="tengah_malam">Tengah malam</option>
+                  </select>
+                </label>
+
+                <div class="form-row full">
+                  <button id="btn-act" class="btn primary">Dapatkan Rekomendasi</button>
+                  <button id="btn-act-clear" type="button" class="btn ghost">Reset</button>
+                </div>
+              </form>
+
+              <div id="act-results" class="cards-grid hidden"></div>
+            </div>
+          </article>
+
+          <!-- Profile Page -->
+          <article id="view-profile" class="page">
+            <div class="card">
+              <h3>Profil</h3>
+              <div class="profile-info-grid">
+                <div><strong>Username:</strong> <span id="profile-username">—</span></div>
+                <div><strong>Akun dibuat di:</strong> <span id="profile-created">—</span></div>
+                <div><strong>Perangkat:</strong> <span id="profile-agent">—</span></div>
+              </div>
+
+              <div class="form-row" style="margin-top:1rem;">
+                <button id="btn-logout" class="btn danger">Logout</button>
+                <button id="btn-delete" class="btn ghost">Hapus Akun</button>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <div>HealthBuddy • Offline demo — dibuat dengan ❤️</div>
+        <div id="dev-test" class="muted small">Developer / Test: Running self-checks...</div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
-    </html>
+                </html>
